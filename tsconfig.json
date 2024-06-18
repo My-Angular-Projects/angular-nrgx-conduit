@@ -1,4 +1,3 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -24,7 +23,14 @@
     ],
     "baseUrl": "./",
     "paths": {
-      "@components/auth": ["src/app/components/auth/index.ts"]
+      "@components/auth": ["src/app/components/auth/index.ts"],
+      "@store/actions": ["src/app/store/actions/index.ts"],
+      "@store/reducers": ["src/app/store/reducers/index.ts"],
+      "@store/effects": ["src/app/store/effects/index.ts"],
+      "@store/selectors": ["src/app/store/selectors/index.ts"],
+      "@interfaces": ["src/app/interfaces/index.ts"],
+      "@models": ["src/app/models/index.ts"],
+      "@services": ["src/app/services/index.ts"],
     }
   },
   "angularCompilerOptions": {

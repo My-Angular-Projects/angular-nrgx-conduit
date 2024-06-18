@@ -11,6 +11,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { AuthActions } from '@store/actions';
+import { UserRegisterModel } from '@models';
+import { IUserRegister } from '@interfaces';
 
 @Component({
   selector: 'rw-signup',
@@ -22,6 +26,7 @@ import {
 })
 export class SignupComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
+  private readonly store = inject(Store);
 
   public form!: FormGroup;
 
@@ -30,7 +35,16 @@ export class SignupComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    //
+    if (this.form.valid) {
+      const { username, password, email } = this.form.value;
+      const userRegister: IUserRegister = new UserRegisterModel(
+        username,
+        password,
+        email,
+      );
+      this.store.dispatch(AuthActions.register(userRegister));
+      this.form.reset();
+    }
   }
 
   private initializeForm(): void {
