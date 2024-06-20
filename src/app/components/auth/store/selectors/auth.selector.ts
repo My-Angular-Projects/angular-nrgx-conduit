@@ -16,3 +16,13 @@ export const authUserSelector = createSelector(
   authFeatureSelect,
   (state: IAuthState) => state.user,
 );
+
+export const authLoggingInSelector = createSelector(
+  authFeatureSelect,
+  (state: IAuthState) => state.isLoggingIn,
+);
+
+export const authErrorsSelector = createSelector(
+  authFeatureSelect,
+  (state: IAuthState) => state.errors,
+);

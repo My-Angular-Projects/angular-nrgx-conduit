@@ -1,4 +1,5 @@
 import { ICurrentUser } from './current-user.interface';
+import { IBackendErrors } from './backend-errors.interface';
 
 export interface IUserLogin {
   username: string;
@@ -18,6 +19,8 @@ export interface IAuthResponseUser {
 }
 
 export interface IAuthState {
-  user: ICurrentUser;
+  user: ICurrentUser | null;
   isSubmitting: boolean;
+  isLoggingIn: boolean | null;
+  errors: IBackendErrors | null;
 }

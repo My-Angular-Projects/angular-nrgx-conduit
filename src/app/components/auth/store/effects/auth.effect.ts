@@ -5,6 +5,7 @@ import { catchError, map, of, switchMap } from 'rxjs';
 import { UserRegisterModel } from '../../../../models';
 import { AuthService } from '../../../../services';
 import { ICurrentUser } from '../../../../interfaces';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export const authEffect = createEffect(
   (actions$ = inject(Actions), service = inject(AuthService)) =>
@@ -19,8 +20,12 @@ export const authEffect = createEffect(
             map((response: ICurrentUser) =>
               AuthActions.registerSuccess({ response }),
             ),
-            catchError((response) =>
-              of(AuthActions.registerFailure({ response })),
+            catchError((response: HttpErrorResponse) =>
+              of(
+                AuthActions.registerFailure({
+                  response: response.error.errors,
+                }),
+              ),
             ),
           );
       }),

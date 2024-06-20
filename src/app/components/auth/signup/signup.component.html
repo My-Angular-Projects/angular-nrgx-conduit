@@ -6,7 +6,9 @@
         <p class="text-xs-center">
           <a [routerLink]="['/login']">Have an account?</a>
         </p>
-        BackendErrors are here
+        @if (errors$ | async; as errors) {
+          <rw-backend-error-messages [errors]="errors" />
+        }
         <form
           [formGroup]="form"
           (ngSubmit)="onSubmit()"

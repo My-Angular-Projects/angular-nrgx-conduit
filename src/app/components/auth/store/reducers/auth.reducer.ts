@@ -6,15 +6,10 @@ import { IAuthState } from '../../../../interfaces';
 export const authFeatureKey = 'auth';
 
 export const initialAuthState: IAuthState = {
-  user: {
-    id: null,
-    email: '',
-    username: '',
-    bio: null,
-    image: '',
-    token: '',
-  },
+  user: null,
   isSubmitting: false,
+  isLoggingIn: null,
+  errors: null,
 };
 
 export const authReducer = createReducer(
@@ -22,14 +17,17 @@ export const authReducer = createReducer(
   on(AuthActions.register, (state: IAuthState) => ({
     ...state,
     isSubmitting: true,
+    errors: null,
   })),
   on(AuthActions.registerSuccess, (state: IAuthState, { response }) => ({
     ...state,
     user: { ...response },
     isSubmitting: false,
+    isLoggingIn: true,
   })),
   on(AuthActions.registerFailure, (state: IAuthState, { response }) => ({
     ...state,
     isSubmitting: false,
+    errors: response,
   })),
 );

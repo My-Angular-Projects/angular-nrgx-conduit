@@ -14,15 +14,21 @@ import {
 import { select, Store } from '@ngrx/store';
 import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
-import { IUserRegister } from '../../../interfaces';
+import { IBackendErrors, IUserRegister } from '../../../interfaces';
 import { UserRegisterModel } from '../../../models';
 import { AuthActions } from '../store/actions';
-import { isSubmittingSelector } from '../store/selectors';
+import { authErrorsSelector, isSubmittingSelector } from '../store/selectors';
+import { BackendErrorMessagesComponent } from '../../backend-error-messages/backend-error-messages.component';
 
 @Component({
   selector: 'rw-signup',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, AsyncPipe],
+  imports: [
+    RouterLink,
+    ReactiveFormsModule,
+    AsyncPipe,
+    BackendErrorMessagesComponent,
+  ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -33,6 +39,7 @@ export class SignupComponent implements OnInit {
 
   public form!: FormGroup;
   public isSubmitting$!: Observable<boolean>;
+  public errors$!: Observable<IBackendErrors | null>;
 
   ngOnInit(): void {
     this.initializeForm();
@@ -62,5 +69,6 @@ export class SignupComponent implements OnInit {
 
   private initializeValues(): void {
     this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
+    this.errors$ = this.store.pipe(select(authErrorsSelector));
   }
 }
