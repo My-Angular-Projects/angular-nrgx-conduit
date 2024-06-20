@@ -1,6 +1,18 @@
-import { IGlobalState } from '@interfaces';
+import { IAuthState } from '@interfaces';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { authFeatureKey } from '../reducers/auth.reducer';
 
-export const isSubmittingSelector = (globalState: IGlobalState) =>
-  globalState.auth.isSubmitting;
+// Deprecate the RootState generic of createFeatureSelector
+// https://github.com/ngrx/platform/issues/3179
+export const authFeatureSelect =
+  createFeatureSelector<IAuthState>(authFeatureKey);
 
-export const authUserSelector = (state: IGlobalState) => state.auth.user;
+export const isSubmittingSelector = createSelector(
+  authFeatureSelect,
+  (state: IAuthState) => state.isSubmitting,
+);
+
+export const authUserSelector = createSelector(
+  authFeatureSelect,
+  (state: IAuthState) => state.user,
+);

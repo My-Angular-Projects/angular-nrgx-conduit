@@ -11,15 +11,18 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AuthActions } from '@store/actions';
 import { UserRegisterModel } from '@models';
 import { IUserRegister } from '@interfaces';
+import { isSubmittingSelector } from '@store/selectors';
+import { AsyncPipe } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'rw-signup',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, AsyncPipe],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,9 +32,11 @@ export class SignupComponent implements OnInit {
   private readonly store = inject(Store);
 
   public form!: FormGroup;
+  public isSubmitting$!: Observable<boolean>;
 
   ngOnInit(): void {
     this.initializeForm();
+    this.initializeValues();
   }
 
   public onSubmit(): void {
@@ -53,5 +58,9 @@ export class SignupComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
+  }
+
+  private initializeValues(): void {
+    this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
   }
 }
