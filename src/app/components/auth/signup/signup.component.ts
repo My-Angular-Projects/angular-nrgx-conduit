@@ -12,12 +12,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { AuthActions } from '@store/actions';
-import { UserRegisterModel } from '@models';
-import { IUserRegister } from '@interfaces';
-import { isSubmittingSelector } from '@store/selectors';
 import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
+import { IUserRegister } from '../../../interfaces';
+import { UserRegisterModel } from '../../../models';
+import { AuthActions } from '../store/actions';
+import { isSubmittingSelector } from '../store/selectors';
 
 @Component({
   selector: 'rw-signup',
@@ -42,12 +42,12 @@ export class SignupComponent implements OnInit {
   public onSubmit(): void {
     if (this.form.valid) {
       const { username, password, email } = this.form.value;
-      const userRegister: IUserRegister = new UserRegisterModel(
+      const request: IUserRegister = new UserRegisterModel(
         username,
         password,
         email,
       );
-      this.store.dispatch(AuthActions.register(userRegister));
+      this.store.dispatch(AuthActions.register({ request }));
       this.form.reset();
     }
   }

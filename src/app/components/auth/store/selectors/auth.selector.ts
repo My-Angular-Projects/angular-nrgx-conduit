@@ -1,6 +1,6 @@
-import { IAuthState } from '@interfaces';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { authFeatureKey } from '../reducers/auth.reducer';
+import { IAuthState } from '../../../../interfaces';
 
 // Deprecate the RootState generic of createFeatureSelector
 // https://github.com/ngrx/platform/issues/3179

@@ -1,4 +1,4 @@
-import { IUserRegister } from '@interfaces';
+import { IUserRegister } from '../interfaces';
 
 export class UserRegisterModel implements IUserRegister {
   constructor(
