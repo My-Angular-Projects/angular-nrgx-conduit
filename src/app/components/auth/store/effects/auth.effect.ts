@@ -1,11 +1,12 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { AuthActions } from '../actions';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { UserRegisterModel } from '../../../../models';
 import { AuthService, PersistenceService } from '../../../../services';
 import { ICurrentUser } from '../../../../interfaces';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 export const authEffect = createEffect(
   (
@@ -38,4 +39,13 @@ export const authEffect = createEffect(
       }),
     ),
   { functional: true },
+);
+
+export const redirectAfterSuccessAuth = createEffect(
+  () =>
+    inject(Actions).pipe(
+      ofType(AuthActions.registerSuccess),
+      tap(() => inject(Router).navigate(['/'])),
+    ),
+  { functional: true, dispatch: false },
 );
