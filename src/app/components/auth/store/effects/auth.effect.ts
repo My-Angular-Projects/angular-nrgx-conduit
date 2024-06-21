@@ -3,12 +3,16 @@ import { inject } from '@angular/core';
 import { AuthActions } from '../actions';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { UserRegisterModel } from '../../../../models';
-import { AuthService } from '../../../../services';
+import { AuthService, PersistenceService } from '../../../../services';
 import { ICurrentUser } from '../../../../interfaces';
 import { HttpErrorResponse } from '@angular/common/http';
 
 export const authEffect = createEffect(
-  (actions$ = inject(Actions), service = inject(AuthService)) =>
+  (
+    actions$ = inject(Actions),
+    service = inject(AuthService),
+    persistenceService = inject(PersistenceService),
+  ) =>
     actions$.pipe(
       ofType(AuthActions.register),
       switchMap(({ request }) => {
@@ -17,9 +21,12 @@ export const authEffect = createEffect(
         return service
           .signup(new UserRegisterModel(username, password, email))
           .pipe(
-            map((response: ICurrentUser) =>
-              AuthActions.registerSuccess({ response }),
-            ),
+            map((response: ICurrentUser) => {
+              const { token, ...rest } = response;
+              persistenceService.setToken(token);
+
+              return AuthActions.registerSuccess({ response: rest });
+            }),
             catchError((response: HttpErrorResponse) =>
               of(
                 AuthActions.registerFailure({
