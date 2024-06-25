@@ -26,11 +26,11 @@ export const authEffect = createEffect(
               const { token, ...rest } = response;
               persistenceService.setToken(token);
 
-              return AuthActions.registerSuccess({ response: rest });
+              return AuthActions.success({ response: rest });
             }),
             catchError((response: HttpErrorResponse) =>
               of(
-                AuthActions.registerFailure({
+                AuthActions.failure({
                   response: response.error.errors,
                 }),
               ),
@@ -44,7 +44,7 @@ export const authEffect = createEffect(
 export const redirectAfterSuccessAuth = createEffect(
   (actions$ = inject(Actions), router = inject(Router)) =>
     actions$.pipe(
-      ofType(AuthActions.registerSuccess),
+      ofType(AuthActions.success),
       tap(() => router.navigate(['/'])),
     ),
   { functional: true, dispatch: false },

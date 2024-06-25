@@ -19,13 +19,13 @@ export const authReducer = createReducer(
     isSubmitting: true,
     errors: null,
   })),
-  on(AuthActions.registerSuccess, (state: IAuthState, { response }) => ({
+  on(AuthActions.success, (state: IAuthState, { response }) => ({
     ...state,
     user: { ...response },
     isSubmitting: false,
     isLoggingIn: true,
   })),
-  on(AuthActions.registerFailure, (state: IAuthState, { response }) => ({
+  on(AuthActions.failure, (state: IAuthState, { response }) => ({
     ...state,
     isSubmitting: false,
     errors: response,
