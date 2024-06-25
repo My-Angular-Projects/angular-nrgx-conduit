@@ -54,6 +54,7 @@ export class SignupComponent implements OnInit {
         password,
         email,
       );
+
       this.store.dispatch(AuthActions.register({ request }));
       this.form.reset();
     }

@@ -6,9 +6,7 @@ import {
   authReducer,
 } from './components/auth/store/reducers/auth.reducer';
 import { provideEffects } from '@ngrx/effects';
-
 import * as authEffects from './components/auth/store/effects/auth.effect';
-import * as loginEffect from './components/auth/store/effects/login.effect';
 
 export const routes: Routes = [
   {
@@ -23,7 +21,7 @@ export const routes: Routes = [
     path: 'signin',
     providers: [
       provideState({ name: authFeatureKey, reducer: authReducer }),
-      provideEffects(loginEffect),
+      provideEffects(authEffects),
     ],
     loadComponent: () => SigninComponent,
   },

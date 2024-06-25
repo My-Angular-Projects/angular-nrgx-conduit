@@ -41,6 +41,35 @@ export const authEffect = createEffect(
   { functional: true },
 );
 
+export const loginEffect = createEffect(
+  (
+    actions$ = inject(Actions),
+    authService = inject(AuthService),
+    persistenceService = inject(PersistenceService),
+  ) =>
+    actions$.pipe(
+      ofType(AuthActions.login),
+      switchMap(({ request }) => {
+        return authService.signin({ ...request }).pipe(
+          map((response: ICurrentUser) => {
+            const { token, ...rest } = response;
+            persistenceService.setToken(token);
+
+            return AuthActions.success({ response: rest });
+          }),
+          catchError((response: HttpErrorResponse) =>
+            of(
+              AuthActions.failure({
+                response: response.error.errors,
+              }),
+            ),
+          ),
+        );
+      }),
+    ),
+  { functional: true },
+);
+
 export const redirectAfterSuccessAuth = createEffect(
   (actions$ = inject(Actions), router = inject(Router)) =>
     actions$.pipe(

@@ -10,6 +10,10 @@ export interface IUserRegister extends IUserLogin {
   username: string;
 }
 
+export interface IUserRequestLogin {
+  user: IUserLogin;
+}
+
 export interface IAuthRequestUser {
   user: IUserRegister;
 }

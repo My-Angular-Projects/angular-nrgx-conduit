@@ -8,6 +8,7 @@ import {
   ICurrentUser,
   IUserLogin,
   IUserRegister,
+  IUserRequestLogin,
 } from '../interfaces';
 
 @Injectable({
@@ -18,31 +19,31 @@ export class AuthService {
 
   /**
    * Register new user
-   * @param {IUserRegister} user
+   * @param {IUserRegister} userRegister
    */
-  public signup(user: IUserRegister): Observable<ICurrentUser> {
+  public signup(userRegister: IUserRegister): Observable<ICurrentUser> {
     const url = `${environment.baseUrl}users`;
     const body: IAuthRequestUser = {
-      user,
+      user: { ...userRegister },
     };
 
     return this.http
       .post<IAuthResponseUser>(url, body)
-      .pipe(map((response: IAuthResponseUser) => response.user));
+      .pipe(map((response: IAuthResponseUser) => response.user)); // TODO: move to mapper
   }
 
   /**
-   * Login user
+   * Login existing user
    * @param {IUserLogin} userLogin
    */
   public signin(userLogin: IUserLogin): Observable<ICurrentUser> {
     const url = `${environment.baseUrl}users/login`;
-    const body = {
+    const body: IUserRequestLogin = {
       user: { ...userLogin },
     };
 
     return this.http
       .post<IAuthResponseUser>(url, body)
-      .pipe(map((response: IAuthResponseUser) => response.user));
+      .pipe(map((response: IAuthResponseUser) => response.user)); // TODO: move to mapper
   }
 }

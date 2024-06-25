@@ -53,6 +53,7 @@ export class SigninComponent implements OnInit {
     if (this.form.valid) {
       const { email, password } = this.form.value;
       const request: IUserLogin = new UserLoginModel(email, password);
+
       this.store.dispatch(AuthActions.login({ request }));
       this.form.reset();
     }
