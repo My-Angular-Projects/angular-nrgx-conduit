@@ -1,9 +1,9 @@
 export interface IRegisteredUser {
-  id: number | null;
   email: string;
   username: string;
   bio: null;
   image: string;
+  id?: number | null;
 }
 
 export interface ICurrentUser extends IRegisteredUser {

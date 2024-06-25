@@ -2,12 +2,12 @@ import { ICurrentUser, IRegisteredUser } from './current-user.interface';
 import { IBackendErrors } from './backend-errors.interface';
 
 export interface IUserLogin {
-  username: string;
+  email: string;
   password: string;
 }
 
 export interface IUserRegister extends IUserLogin {
-  email: string;
+  username: string;
 }
 
 export interface IAuthRequestUser {
