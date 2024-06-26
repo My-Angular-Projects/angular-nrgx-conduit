@@ -12,14 +12,20 @@ export const isSubmittingSelector = createSelector(
   (state: IAuthState) => state.isSubmitting,
 );
 
-export const authUserSelector = createSelector(
+export const currentUserSelector = createSelector(
   authFeatureSelect,
   (state: IAuthState) => state.user,
 );
 
-export const authLoggingInSelector = createSelector(
+export const isLoggedInSelector = createSelector(
   authFeatureSelect,
   (state: IAuthState) => state.isLoggingIn,
+);
+
+export const isAnonymousSelector = createSelector(
+  authFeatureSelect,
+  (state: IAuthState) =>
+    state.isLoggingIn === false || state.isLoggingIn === null,
 );
 
 export const authErrorsSelector = createSelector(
