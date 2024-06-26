@@ -10,7 +10,9 @@ export class PersistenceService {
 
   public setToken(token: string | undefined): void {
     try {
-      this.storage.setItem(EPersistence.accessToken, JSON.stringify(token));
+      if (typeof token === 'string') {
+        this.storage.setItem(EPersistence.accessToken, token);
+      }
     } catch (e) {
       console.error('Error saving token', e);
     }

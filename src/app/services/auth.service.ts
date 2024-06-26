@@ -29,7 +29,7 @@ export class AuthService {
 
     return this.http
       .post<IAuthResponseUser>(url, body)
-      .pipe(map((response: IAuthResponseUser) => response.user)); // TODO: move to mapper
+      .pipe(map(this.getUserMapper));
   }
 
   /**
@@ -44,6 +44,24 @@ export class AuthService {
 
     return this.http
       .post<IAuthResponseUser>(url, body)
-      .pipe(map((response: IAuthResponseUser) => response.user)); // TODO: move to mapper
+      .pipe(map(this.getUserMapper));
+  }
+
+  /**
+   * Get existing user by auth token
+   */
+  public getCurrentUser(): Observable<ICurrentUser> {
+    const url = `${environment.baseUrl}user`;
+
+    return this.http.get<IAuthResponseUser>(url).pipe(map(this.getUserMapper));
+  }
+
+  /**
+   * Mapper
+   * @private
+   * @param response
+   */
+  private getUserMapper(response: IAuthResponseUser): ICurrentUser {
+    return response.user;
   }
 }

@@ -25,6 +25,7 @@ export interface IAuthResponseUser {
 export interface IAuthState {
   user: IRegisteredUser | null;
   isSubmitting: boolean;
+  isLoading: boolean;
   isLoggingIn: boolean | null;
   errors: IBackendErrors | null;
 }

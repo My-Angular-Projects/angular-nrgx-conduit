@@ -1,8 +1,8 @@
-import { ApplicationConfig, isDevMode } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, isDevMode } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideState, provideStore } from '@ngrx/store';
+import { provideState, provideStore, Store } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { STORAGE } from './tokens';
@@ -13,19 +13,32 @@ import {
 } from './components/auth/store/reducers/auth.reducer';
 import { provideEffects } from '@ngrx/effects';
 import * as authEffects from './components/auth/store/effects/auth.effect';
+import * as currentUserEffects from './components/auth/store/effects/current-user.effect';
+import { CurrentUserAction } from './components/auth/store/actions';
+import { IGlobalState } from './interfaces';
+
+function initializeApplication(store: Store<IGlobalState>): () => void {
+  return (): void => store.dispatch(CurrentUserAction.get());
+}
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideStore(),
     provideState({ name: authFeatureKey, reducer: authReducer }),
-    provideEffects(authEffects),
+    provideEffects(authEffects, currentUserEffects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideHttpClient(withInterceptors([loginInterceptor])),
     // we can provide the desired Storage (localStorage, sessionStorage, etc.) to our Angular application
     {
       provide: STORAGE,
       useValue: localStorage,
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApplication,
+      multi: true,
+      deps: [Store],
     },
   ],
 };
