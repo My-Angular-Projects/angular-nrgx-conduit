@@ -9,4 +9,6 @@ import { FeedComponent } from '../feed/feed.component';
   styleUrl: './global-feed.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GlobalFeedComponent {}
+export class GlobalFeedComponent {
+  public readonly apiUrl = '/articles';
+}
