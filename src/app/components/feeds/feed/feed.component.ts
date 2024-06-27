@@ -16,11 +16,12 @@ import {
 } from '../store/selectors';
 import { RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
+import { LoadingComponent } from '../../loading/loading.component';
 
 @Component({
   selector: 'rw-feed',
   standalone: true,
-  imports: [RouterLink, AsyncPipe],
+  imports: [RouterLink, AsyncPipe, LoadingComponent],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
