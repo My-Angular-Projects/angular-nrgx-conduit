@@ -7,7 +7,6 @@ import { BannerComponent } from '../../banner/banner.component';
   standalone: true,
   imports: [FeedComponent, BannerComponent],
   templateUrl: './global-feed.component.html',
-  styleUrl: './global-feed.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GlobalFeedComponent {

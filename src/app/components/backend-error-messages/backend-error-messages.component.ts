@@ -6,7 +6,6 @@ import { IBackendErrors } from '../../interfaces';
   standalone: true,
   imports: [],
   templateUrl: './backend-error-messages.component.html',
-  styleUrl: './backend-error-messages.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BackendErrorMessagesComponent {

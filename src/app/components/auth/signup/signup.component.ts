@@ -30,7 +30,6 @@ import { BackendErrorMessagesComponent } from '../../backend-error-messages/back
     BackendErrorMessagesComponent,
   ],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignupComponent implements OnInit {

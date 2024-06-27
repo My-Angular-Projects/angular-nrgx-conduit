@@ -17,13 +17,13 @@ import {
 import { RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { LoadingComponent } from '../../loading/loading.component';
+import { ErrorMessagesComponent } from '../../error-messages/error-messages.component';
 
 @Component({
   selector: 'rw-feed',
   standalone: true,
-  imports: [RouterLink, AsyncPipe, LoadingComponent],
+  imports: [RouterLink, AsyncPipe, LoadingComponent, ErrorMessagesComponent],
   templateUrl: './feed.component.html',
-  styleUrl: './feed.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeedComponent implements OnInit {

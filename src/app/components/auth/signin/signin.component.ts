@@ -32,7 +32,6 @@ import { AuthActions } from '../store/actions';
     RouterLink,
   ],
   templateUrl: './signin.component.html',
-  styleUrl: './signin.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SigninComponent implements OnInit {

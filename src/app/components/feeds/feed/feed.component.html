@@ -2,8 +2,8 @@
   <rw-loading />
 }
 
-@if (errors$ | async) {
-  <div>Some error happened...</div>
+@if (errors$ | async; as errors) {
+  <rw-error-messages [errors]="errors" />
 }
 
 @if (feeds$ | async; as feeds) {
