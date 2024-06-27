@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FeedComponent } from '../feed/feed.component';
+import { BannerComponent } from '../../banner/banner.component';
 
 @Component({
   selector: 'rw-global-feed',
   standalone: true,
-  imports: [FeedComponent],
+  imports: [FeedComponent, BannerComponent],
   templateUrl: './global-feed.component.html',
   styleUrl: './global-feed.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
