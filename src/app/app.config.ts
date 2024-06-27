@@ -14,8 +14,13 @@ import {
 import { provideEffects } from '@ngrx/effects';
 import * as authEffects from './components/auth/store/effects/auth.effect';
 import * as currentUserEffects from './components/auth/store/effects/current-user.effect';
+import * as feedEffects from './components/feeds/store/effects/feed.effect';
 import { CurrentUserAction } from './components/auth/store/actions';
 import { IGlobalState } from './interfaces';
+import {
+  feedsFeatureKey,
+  feedsReducer,
+} from './components/feeds/store/reducers';
 
 function initializeApplication(store: Store<IGlobalState>): () => void {
   return (): void => store.dispatch(CurrentUserAction.get());
@@ -26,7 +31,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideStore(),
     provideState({ name: authFeatureKey, reducer: authReducer }),
-    provideEffects(authEffects, currentUserEffects),
+    provideState({ name: feedsFeatureKey, reducer: feedsReducer }),
+    provideEffects(authEffects, currentUserEffects, feedEffects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideHttpClient(withInterceptors([loginInterceptor])),
     // we can provide the desired Storage (localStorage, sessionStorage, etc.) to our Angular application

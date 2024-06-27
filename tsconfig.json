@@ -24,6 +24,7 @@
     "baseUrl": "./",
     "paths": {
       "@components/auth": ["src/app/components/auth/index.ts"],
+      "@environments/*": ["src/environments/*"],
     }
   },
   "angularCompilerOptions": {

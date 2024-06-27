@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Input,
+} from '@angular/core';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'rw-feed',
@@ -6,8 +12,14 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   imports: [],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeedComponent {
+  private readonly store = inject(Store);
 
+  @Input({
+    alias: 'apiUrl',
+    required: true,
+  })
+  public api: string = '';
 }
