@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { SigninComponent, SignupComponent } from '@components/auth';
+import { GlobalFeedComponent } from './components/feeds/global-feed/global-feed.component';
 
 export const routes: Routes = [
   {
@@ -9,5 +10,9 @@ export const routes: Routes = [
   {
     path: 'signin',
     loadComponent: () => SigninComponent,
+  },
+  {
+    path: '',
+    loadComponent: () => GlobalFeedComponent,
   },
 ];
