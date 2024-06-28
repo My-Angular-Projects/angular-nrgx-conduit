@@ -8,6 +8,7 @@ export const initialState: IFeedState = {
   isLoading: false,
   data: null,
   errors: null,
+  articlesLimit: 10,
 };
 
 export const feedsReducer = createReducer(

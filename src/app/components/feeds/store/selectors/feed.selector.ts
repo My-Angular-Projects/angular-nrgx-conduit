@@ -19,3 +19,8 @@ export const feedDataSelector = createSelector(
   feedFeatureSelector,
   (state: IFeedState) => state.data,
 );
+
+export const feedArticlesLimitSelector = createSelector(
+  feedFeatureSelector,
+  (state: IFeedState) => state.articlesLimit,
+);
