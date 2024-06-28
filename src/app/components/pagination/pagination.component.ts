@@ -44,15 +44,7 @@ export class PaginationComponent implements OnInit {
   public pagesCount!: number[];
 
   ngOnInit(): void {
-    this.pagesCount = this.generatePagesCount();
-  }
-
-  /**
-   * Generate array of links from paginator
-   * @private
-   */
-  private generatePagesCount(): number[] {
-    return generateRange(
+    this.pagesCount = generateRange(
       1,
       Math.ceil(this.articlesCount / this.articlesLimit!),
     );
