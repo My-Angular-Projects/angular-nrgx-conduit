@@ -1,19 +1,27 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
+import { generateRange } from '../helpers';
+import { RouterLink } from '@angular/router';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'rw-pagination',
   standalone: true,
-  imports: [],
+  imports: [RouterLink, NgClass],
   templateUrl: './pagination.component.html',
-  styleUrl: './pagination.component.scss',
+  styleUrl: './pagination.component.scss', // ?
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PaginationComponent {
+export class PaginationComponent implements OnInit {
   @Input({
     alias: 'articlesCount',
     required: true,
   })
-  public articlesCount = 0;
+  public articlesCount!: number;
 
   @Input({
     alias: 'articlesLimit',
@@ -32,4 +40,21 @@ export class PaginationComponent {
     required: true,
   })
   public baseUrl = '';
+
+  public pagesCount!: number[];
+
+  ngOnInit(): void {
+    this.pagesCount = this.generatePagesCount();
+  }
+
+  /**
+   * Generate array of links from paginator
+   * @private
+   */
+  private generatePagesCount(): number[] {
+    return generateRange(
+      1,
+      Math.ceil(this.articlesCount / this.articlesLimit!),
+    );
+  }
 }

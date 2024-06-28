@@ -27,5 +27,5 @@ export interface IFeedState {
   isLoading: boolean;
   data: IFeed | null;
   errors: string | null;
-  articlesLimit: number;
+  articlesLimit: number | null;
 }
