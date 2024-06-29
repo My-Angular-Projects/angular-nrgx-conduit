@@ -36,11 +36,11 @@
         HERE LIST OF TAGS
       </a>
     </div>
-    <rw-pagination
-      [articlesCount]="feeds.articlesCount"
-      [articlesLimit]="articlesLimit$ | async"
-      [articlesCurrentPage]="articlesCurrentPage$ | async"
-      [baseUrl]="baseUrl"
-    />
   }
 }
+<rw-pagination
+  [articlesCount]="(feeds$ | async)!.articlesCount"
+  [articlesLimit]="articlesLimit$ | async"
+  [articlesCurrentPage]="articlesCurrentPage$ | async"
+  [baseUrl]="baseUrl"
+/>
