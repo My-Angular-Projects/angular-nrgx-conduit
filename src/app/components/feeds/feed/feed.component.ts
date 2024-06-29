@@ -20,6 +20,7 @@ import { AsyncPipe } from '@angular/common';
 import { LoadingComponent } from '../../loading/loading.component';
 import { ErrorMessagesComponent } from '../../error-messages/error-messages.component';
 import { PaginationComponent } from '../../pagination/pagination.component';
+import { TagsListComponent } from '../../tags-list/tags-list.component';
 
 @Component({
   selector: 'rw-feed',
@@ -30,6 +31,7 @@ import { PaginationComponent } from '../../pagination/pagination.component';
     LoadingComponent,
     ErrorMessagesComponent,
     PaginationComponent,
+    TagsListComponent,
   ],
   templateUrl: './feed.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

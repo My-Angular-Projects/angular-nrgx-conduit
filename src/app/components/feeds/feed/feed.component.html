@@ -33,7 +33,7 @@
         <h1>{{ article.title }}</h1>
         <p>{{ article.description }}</p>
         <span>Read more..</span>
-        HERE LIST OF TAGS
+        <rw-tags-list [tags]="article.tagList" />
       </a>
     </div>
   }
