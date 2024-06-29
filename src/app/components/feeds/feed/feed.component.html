@@ -39,7 +39,7 @@
   }
 }
 <rw-pagination
-  [articlesCount]="(feeds$ | async)?.articlesCount || 0"
+  [articlesCount]="(feeds$ | async)!.articlesCount"
   [articlesLimit]="articlesLimit$ | async"
   [articlesCurrentPage]="articlesCurrentPage"
   [baseUrl]="baseUrl"

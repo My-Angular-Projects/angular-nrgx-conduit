@@ -21,7 +21,7 @@ export class PaginationComponent implements OnInit {
     alias: 'articlesCount',
     required: true,
   })
-  public articlesCount!: number;
+  public articlesCount!: number | null;
 
   @Input({
     alias: 'articlesLimit',
@@ -46,7 +46,7 @@ export class PaginationComponent implements OnInit {
   ngOnInit(): void {
     this.pagesCount = generateRange(
       1,
-      Math.ceil(this.articlesCount / this.articlesLimit!),
+      Math.ceil(this.articlesCount! / this.articlesLimit!),
     );
   }
 }
