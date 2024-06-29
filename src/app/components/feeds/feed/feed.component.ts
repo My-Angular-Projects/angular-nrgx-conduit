@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { FeedAction } from '../store/actions';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IFeed } from '../../../interfaces';
 import {
   feedArticlesLimitSelector,
@@ -43,7 +43,7 @@ export class FeedComponent implements OnInit {
   public feeds$!: Observable<IFeed | null>;
   public errors$!: Observable<string | null>;
   public articlesLimit$!: Observable<number | null>;
-  public articlesCurrentPage$!: Observable<number | null>;
+  public articlesCurrentPage: number | null = null;
   public baseUrl!: string;
 
   @Input({
@@ -54,7 +54,7 @@ export class FeedComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeValues();
-    this.getFeeds(this.apiUrlProps);
+    this.initializeListeners();
   }
 
   private initializeValues(): void {
@@ -63,12 +63,12 @@ export class FeedComponent implements OnInit {
     this.isLoading$ = this.store.pipe(select(feedIsLoadingSelector));
     this.articlesLimit$ = this.store.pipe(select(feedArticlesLimitSelector));
     this.baseUrl = this.router.url.split('?')[0];
-    this.articlesCurrentPage$ = this.route.queryParams.pipe(
-      map((params: Params) => Number(params['page'] || '1') || null),
-    );
   }
 
-  private getFeeds(request: string): void {
-    this.store.dispatch(FeedAction.get({ request }));
+  private initializeListeners(): void {
+    this.route.queryParams.subscribe((params: Params) => {
+      this.articlesCurrentPage = Number(params['page'] || '1');
+      this.store.dispatch(FeedAction.get({ request: this.apiUrlProps }));
+    });
   }
 }
