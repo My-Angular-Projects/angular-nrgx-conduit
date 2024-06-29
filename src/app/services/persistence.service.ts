@@ -8,6 +8,11 @@ import { EPersistence } from '../enums';
 export class PersistenceService {
   private readonly storage = inject(STORAGE);
 
+  /**
+   * Сохраняет токен в localStorage
+   * @param {string} token Токен для сохранения
+   * @return {void} Ничего не возвращает
+   */
   public setToken(token: string | undefined): void {
     try {
       if (typeof token === 'string') {
@@ -18,6 +23,10 @@ export class PersistenceService {
     }
   }
 
+  /**
+   * Возвращает сохраненный токен
+   * @return {string} Сохраненный токен
+   */
   public getToken(): string | null {
     try {
       return this.storage.getItem(EPersistence.accessToken);

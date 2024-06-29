@@ -15,12 +15,17 @@ import { provideEffects } from '@ngrx/effects';
 import * as authEffects from './components/auth/store/effects/auth.effect';
 import * as currentUserEffects from './components/auth/store/effects/current-user.effect';
 import * as feedEffects from './components/feeds/store/effects/feed.effect';
+import * as tagsEffects from './components/tags/store/tags.effect';
 import { CurrentUserAction } from './components/auth/store/actions';
 import { IGlobalState } from './interfaces';
 import {
   feedsFeatureKey,
   feedsReducer,
 } from './components/feeds/store/reducers';
+import {
+  tagsFeatureKey,
+  tagsReducer,
+} from './components/tags/store/tags.reducer';
 
 function initializeApplication(store: Store<IGlobalState>): () => void {
   return (): void => store.dispatch(CurrentUserAction.get());
@@ -32,7 +37,8 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideState({ name: authFeatureKey, reducer: authReducer }),
     provideState({ name: feedsFeatureKey, reducer: feedsReducer }),
-    provideEffects(authEffects, currentUserEffects, feedEffects),
+    provideState({ name: tagsFeatureKey, reducer: tagsReducer }),
+    provideEffects(authEffects, currentUserEffects, feedEffects, tagsEffects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideHttpClient(withInterceptors([loginInterceptor])),
     // we can provide the desired Storage (localStorage, sessionStorage, etc.) to our Angular application
