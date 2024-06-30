@@ -16,9 +16,9 @@ export const tagsReducer = createReducer(
     ...state,
     isLoading: true,
   })),
-  on(TagsActionsGroup.success, (state: ITagsState, { response }) => ({
+  on(TagsActionsGroup.success, (state: ITagsState, { tags }) => ({
     ...state,
-    data: [...response],
+    data: [...tags],
     isLoading: false,
   })),
   on(TagsActionsGroup.failure, (state: ITagsState) => ({

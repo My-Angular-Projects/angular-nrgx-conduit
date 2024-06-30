@@ -11,11 +11,7 @@ export const tagsEffect = createEffect(
       ofType(TagsActionsGroup.get),
       switchMap(() =>
         service.getTags().pipe(
-          map((response: PopularTag[]) => {
-            console.log('response', response);
-
-            return TagsActionsGroup.success({ response });
-          }),
+          map((tags: PopularTag[]) => TagsActionsGroup.success({ tags })),
           catchError(() => of(TagsActionsGroup.failure())),
         ),
       ),

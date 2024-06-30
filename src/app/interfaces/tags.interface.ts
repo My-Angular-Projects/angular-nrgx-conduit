@@ -1,5 +1,7 @@
+export type PopularTag = string;
+
 export interface IResponsePopularTag {
-  response: PopularTag[];
+  tags: PopularTag[];
 }
 
 export interface ITagsState {
@@ -7,5 +9,3 @@ export interface ITagsState {
   data: PopularTag[];
   errors: string | null;
 }
-
-export type PopularTag = string;
