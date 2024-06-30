@@ -5,7 +5,7 @@ import { tagsFeatureKey } from './tags.reducer';
 export const tagsFeatureSelector =
   createFeatureSelector<ITagsState>(tagsFeatureKey);
 
-export const tagsIsLoadingSelector = createSelector(
+export const tagsLoadingSelector = createSelector(
   tagsFeatureSelector,
   (state: ITagsState) => state.isLoading,
 );
