@@ -1,7 +1,7 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { IFeed } from '../../../../interfaces';
 
-export const FeedAction = createActionGroup({
+export const FeedActionGroup = createActionGroup({
   source: 'Feed',
   events: {
     Get: props<{ request: string }>(),

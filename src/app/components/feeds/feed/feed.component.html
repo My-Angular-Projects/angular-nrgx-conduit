@@ -38,9 +38,10 @@
     </div>
   }
 }
+
 <rw-pagination
-  [articlesCount]="articlesCount$ | async"
-  [articlesLimit]="articlesLimit$ | async"
   [articlesCurrentPage]="articlesCurrentPage"
   [baseUrl]="baseUrl"
+  [articlesCount]="articlesCount$ | async"
+  [articlesLimit]="articlesLimit$ | async"
 />

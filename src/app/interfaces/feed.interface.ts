@@ -20,12 +20,12 @@ export interface IArticle {
 
 export interface IFeed {
   articles: IArticle[];
-  articlesCount: number | null;
+  articlesCount: number;
 }
 
 export interface IFeedState {
   isLoading: boolean;
-  data: IFeed | null;
-  errors: string | null;
-  articlesLimit: number | null;
+  data: IFeed;
+  errors: string;
+  articlesLimit: number;
 }

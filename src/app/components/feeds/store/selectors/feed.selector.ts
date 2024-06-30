@@ -27,5 +27,5 @@ export const feedArticlesLimitSelector = createSelector(
 
 export const feedArticlesCountSelector = createSelector(
   feedFeatureSelector,
-  (state: IFeedState) => state.data?.articlesCount,
+  (state: IFeedState) => state.data.articlesCount,
 );

@@ -1,25 +1,28 @@
 import { createReducer, on } from '@ngrx/store';
-import { FeedAction } from '../actions';
-import { IFeedState } from '../../../../interfaces';
+import { FeedActionGroup } from '../actions';
+import { IFeed, IFeedState } from '../../../../interfaces';
 
 export const feedsFeatureKey = 'feeds';
 
 export const initialState: IFeedState = {
   isLoading: false,
-  data: null,
-  errors: null,
+  data: <IFeed>{},
+  errors: '',
   articlesLimit: 10,
 };
 
 export const feedsReducer = createReducer(
   initialState,
-  on(FeedAction.get, (state: IFeedState) => ({ ...state, isLoading: true })),
-  on(FeedAction.success, (state: IFeedState, { response }) => ({
+  on(FeedActionGroup.get, (state: IFeedState) => ({
+    ...state,
+    isLoading: true,
+  })),
+  on(FeedActionGroup.success, (state: IFeedState, { response }) => ({
     ...state,
     isLoading: false,
     data: response,
   })),
-  on(FeedAction.failure, (state: IFeedState) => ({
+  on(FeedActionGroup.failure, (state: IFeedState) => ({
     ...state,
     isLoading: false,
   })),

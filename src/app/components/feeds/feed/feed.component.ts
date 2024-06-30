@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { FeedAction } from '../store/actions';
+import { FeedActionGroup } from '../store/actions';
 import { Observable } from 'rxjs';
 import { IFeed } from '../../../interfaces';
 import {
@@ -43,11 +43,13 @@ export class FeedComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
 
   public isLoading$!: Observable<boolean>;
-  public feeds$!: Observable<IFeed | null>;
-  public errors$!: Observable<string | null>;
-  public articlesLimit$!: Observable<number | null>;
-  public articlesCurrentPage: number | null = null;
-  public articlesCount$!: Observable<number | null | undefined>;
+  public feeds$!: Observable<IFeed>;
+  public errors$!: Observable<string>;
+
+  public articlesLimit$!: Observable<number>;
+  public articlesCount$!: Observable<number>;
+
+  public articlesCurrentPage!: number;
   public baseUrl!: string;
 
   @Input({
@@ -65,16 +67,16 @@ export class FeedComponent implements OnInit {
     this.feeds$ = this.store.pipe(select(feedDataSelector));
     this.errors$ = this.store.pipe(select(feedErrorsSelector));
     this.isLoading$ = this.store.pipe(select(feedIsLoadingSelector));
-    this.articlesLimit$ = this.store.pipe(select(feedArticlesLimitSelector));
     this.baseUrl = this.router.url.split('?')[0];
 
     this.articlesCount$ = this.store.pipe(select(feedArticlesCountSelector));
+    this.articlesLimit$ = this.store.pipe(select(feedArticlesLimitSelector));
   }
 
   private initializeListeners(): void {
     this.route.queryParams.subscribe((params: Params) => {
       this.articlesCurrentPage = Number(params['page'] || '1');
-      this.store.dispatch(FeedAction.get({ request: this.apiUrlProps }));
+      this.store.dispatch(FeedActionGroup.get({ request: this.apiUrlProps }));
     });
   }
 }
