@@ -1,32 +1,25 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   Input,
   OnInit,
 } from '@angular/core';
-import { generateRange } from '../helpers';
 import { RouterLink } from '@angular/router';
-import { NgClass } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { feedPagesCountSelector } from '../feeds/store/selectors';
 
 @Component({
   selector: 'rw-pagination',
   standalone: true,
-  imports: [RouterLink, NgClass],
+  imports: [RouterLink, NgClass, AsyncPipe],
   templateUrl: './pagination.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginationComponent implements OnInit {
-  @Input({
-    alias: 'articlesCount',
-    required: true,
-  })
-  public articlesCount: number = 0;
-
-  @Input({
-    alias: 'articlesLimit',
-    required: true,
-  })
-  public articlesLimit: number = 0;
+  private readonly store = inject(Store);
 
   @Input({
     alias: 'articlesCurrentPage',
@@ -40,12 +33,9 @@ export class PaginationComponent implements OnInit {
   })
   public baseUrl = '';
 
-  public pagesCount!: number[];
+  public pagesCount$!: Observable<number[]>;
 
   ngOnInit(): void {
-    this.pagesCount = generateRange(
-      1,
-      Math.ceil(this.articlesCount / this.articlesLimit),
-    );
+    this.pagesCount$ = this.store.pipe(select(feedPagesCountSelector));
   }
 }

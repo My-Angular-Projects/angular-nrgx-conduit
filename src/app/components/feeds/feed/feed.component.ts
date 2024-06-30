@@ -10,11 +10,9 @@ import { FeedActionGroup } from '../store/actions';
 import { Observable } from 'rxjs';
 import { IFeed } from '../../../interfaces';
 import {
-  feedArticlesCountSelector,
-  feedArticlesLimitSelector,
   feedDataSelector,
   feedErrorsSelector,
-  feedIsLoadingSelector,
+  feedLoadingSelector,
 } from '../store/selectors';
 import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
@@ -46,9 +44,6 @@ export class FeedComponent implements OnInit {
   public feeds$!: Observable<IFeed>;
   public errors$!: Observable<string>;
 
-  public articlesLimit$!: Observable<number>;
-  public articlesCount$!: Observable<number>;
-
   public articlesCurrentPage!: number;
   public baseUrl!: string;
 
@@ -66,11 +61,9 @@ export class FeedComponent implements OnInit {
   private initializeValues(): void {
     this.feeds$ = this.store.pipe(select(feedDataSelector));
     this.errors$ = this.store.pipe(select(feedErrorsSelector));
-    this.isLoading$ = this.store.pipe(select(feedIsLoadingSelector));
-    this.baseUrl = this.router.url.split('?')[0];
+    this.isLoading$ = this.store.pipe(select(feedLoadingSelector));
 
-    this.articlesCount$ = this.store.pipe(select(feedArticlesCountSelector));
-    this.articlesLimit$ = this.store.pipe(select(feedArticlesLimitSelector));
+    this.baseUrl = this.router.url.split('?')[0];
   }
 
   private initializeListeners(): void {

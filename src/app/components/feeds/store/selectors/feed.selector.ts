@@ -1,31 +1,44 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { IFeedState } from '../../../../interfaces';
+import { IFeed, IFeedState } from '../../../../interfaces';
 import { feedsFeatureKey } from '../reducers';
+import { generateRange } from '../../../helpers';
 
 export const feedFeatureSelector =
   createFeatureSelector<IFeedState>(feedsFeatureKey);
 
-export const feedIsLoadingSelector = createSelector(
+export const feedLoadingSelector = createSelector(
   feedFeatureSelector,
-  (state: IFeedState) => state.isLoading,
+  (state: IFeedState): boolean => state.isLoading,
 );
 
 export const feedErrorsSelector = createSelector(
   feedFeatureSelector,
-  (state: IFeedState) => state.errors,
+  (state: IFeedState): string => state.errors,
 );
 
 export const feedDataSelector = createSelector(
   feedFeatureSelector,
-  (state: IFeedState) => state.data,
+  (state: IFeedState): IFeed => state.data,
 );
 
-export const feedArticlesLimitSelector = createSelector(
+export const feedLimitSelector = createSelector(
   feedFeatureSelector,
-  (state: IFeedState) => state.articlesLimit,
+  (state: IFeedState): number => state.articlesLimit,
 );
 
-export const feedArticlesCountSelector = createSelector(
+export const feedCountSelector = createSelector(
   feedFeatureSelector,
-  (state: IFeedState) => state.data.articlesCount,
+  (state: IFeedState): number => state.data.articlesCount,
+);
+
+export const feedPagesCountSelector = createSelector(
+  feedCountSelector,
+  feedLimitSelector,
+  (articlesCount: number, articlesLimit: number): number[] => {
+    if (articlesCount && articlesLimit) {
+      return generateRange(1, Math.ceil(articlesCount / articlesLimit));
+    } else {
+      return [];
+    }
+  },
 );

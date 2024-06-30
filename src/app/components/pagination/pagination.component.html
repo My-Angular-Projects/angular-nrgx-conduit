@@ -1,5 +1,5 @@
 <ul class="pagination">
-  @for (page of pagesCount; track page) {
+  @for (page of pagesCount$ | async; track page) {
     <li
       class="page-item"
       [ngClass]="{ active: articlesCurrentPage === page }"
