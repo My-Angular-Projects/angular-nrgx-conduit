@@ -20,7 +20,7 @@ export interface IArticle {
 
 export interface IFeed {
   articles: IArticle[];
-  articlesCount: number;
+  articlesCount: number | null;
 }
 
 export interface IFeedState {

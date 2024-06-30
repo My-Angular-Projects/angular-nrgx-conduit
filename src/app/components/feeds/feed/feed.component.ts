@@ -10,6 +10,7 @@ import { FeedAction } from '../store/actions';
 import { Observable } from 'rxjs';
 import { IFeed } from '../../../interfaces';
 import {
+  feedArticlesCountSelector,
   feedArticlesLimitSelector,
   feedDataSelector,
   feedErrorsSelector,
@@ -46,6 +47,7 @@ export class FeedComponent implements OnInit {
   public errors$!: Observable<string | null>;
   public articlesLimit$!: Observable<number | null>;
   public articlesCurrentPage: number | null = null;
+  public articlesCount$!: Observable<number | null | undefined>;
   public baseUrl!: string;
 
   @Input({
@@ -65,6 +67,8 @@ export class FeedComponent implements OnInit {
     this.isLoading$ = this.store.pipe(select(feedIsLoadingSelector));
     this.articlesLimit$ = this.store.pipe(select(feedArticlesLimitSelector));
     this.baseUrl = this.router.url.split('?')[0];
+
+    this.articlesCount$ = this.store.pipe(select(feedArticlesCountSelector));
   }
 
   private initializeListeners(): void {

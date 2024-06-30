@@ -13,7 +13,6 @@ import { NgClass } from '@angular/common';
   standalone: true,
   imports: [RouterLink, NgClass],
   templateUrl: './pagination.component.html',
-  styleUrl: './pagination.component.scss', // ?
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginationComponent implements OnInit {
@@ -21,7 +20,7 @@ export class PaginationComponent implements OnInit {
     alias: 'articlesCount',
     required: true,
   })
-  public articlesCount!: number | null;
+  public articlesCount!: number | null | undefined;
 
   @Input({
     alias: 'articlesLimit',
