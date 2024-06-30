@@ -2,7 +2,7 @@
   @for (page of pagesCount$ | async; track page) {
     <li
       class="page-item"
-      [ngClass]="{ active: articlesCurrentPage === page }"
+      [class.active]="{ active: articlesCurrentPage === page }"
     >
       <a
         [routerLink]="baseUrl"
