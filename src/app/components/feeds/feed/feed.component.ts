@@ -7,8 +7,6 @@ import {
 } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { FeedActionGroup } from '../store/actions';
-import { Observable } from 'rxjs';
-import { IFeed } from '../../../interfaces';
 import {
   feedDataSelector,
   feedErrorsSelector,
@@ -40,9 +38,9 @@ export class FeedComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
-  public isLoading$!: Observable<boolean>;
-  public feeds$!: Observable<IFeed>;
-  public errors$!: Observable<string>;
+  public readonly isLoading$ = this.store.pipe(select(feedLoadingSelector));
+  public readonly feeds$ = this.store.pipe(select(feedDataSelector));
+  public readonly errors$ = this.store.pipe(select(feedErrorsSelector));
 
   public articlesCurrentPage!: number;
   public baseUrl!: string;
@@ -59,10 +57,6 @@ export class FeedComponent implements OnInit {
   }
 
   private initializeValues(): void {
-    this.feeds$ = this.store.pipe(select(feedDataSelector));
-    this.errors$ = this.store.pipe(select(feedErrorsSelector));
-    this.isLoading$ = this.store.pipe(select(feedLoadingSelector));
-
     this.baseUrl = this.router.url.split('?')[0];
   }
 
