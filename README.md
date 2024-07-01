@@ -5,6 +5,7 @@
 - [conduit](https://angular-realworld.netlify.app/)
 - [Deprecate the RootState generic of createFeatureSelector](https://github.com/ngrx/platform/issues/3179)
 - [Git. Руководство по оформлению веток и коммитов](https://habr.com/ru/articles/820547/)
+- [Angular NgRx - How to use Feature Creator](https://youtu.be/bHw8SV4SNUU?si=L-ef1xOoP-pIpEim)
 
 ### Тип ветки, который ставится в начале ее названия:
 

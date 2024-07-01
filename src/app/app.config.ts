@@ -22,10 +22,7 @@ import {
   feedsFeatureKey,
   feedsReducer,
 } from './components/feeds/store/reducers';
-import {
-  tagsFeatureKey,
-  tagsReducer,
-} from './components/tags/store/tags.reducer';
+import { tagsFeature } from './components/tags/store/tags.reducer';
 
 function initializeApplication(store: Store<IGlobalState>): () => void {
   return (): void => store.dispatch(CurrentUserAction.get());
@@ -37,7 +34,7 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideState({ name: authFeatureKey, reducer: authReducer }),
     provideState({ name: feedsFeatureKey, reducer: feedsReducer }),
-    provideState({ name: tagsFeatureKey, reducer: tagsReducer }),
+    provideState(tagsFeature),
     provideEffects(authEffects, currentUserEffects, feedEffects, tagsEffects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideHttpClient(withInterceptors([loginInterceptor])),

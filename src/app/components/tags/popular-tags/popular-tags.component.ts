@@ -4,19 +4,14 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { Observable } from 'rxjs';
-import { PopularTag } from '../../../interfaces';
 import { select, Store } from '@ngrx/store';
-import {
-  tagsDataSelector,
-  tagsErrorsSelector,
-  tagsLoadingSelector,
-} from '../store/tags.selector';
 import { AsyncPipe } from '@angular/common';
 import { TagsActionsGroup } from '../store/tags.action';
 import { LoadingComponent } from '../../loading/loading.component';
 import { ErrorMessagesComponent } from '../../error-messages/error-messages.component';
 import { RouterLink } from '@angular/router';
+import { tagsFeature } from '../store/tags.reducer';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'rw-popular-tags',
@@ -28,22 +23,17 @@ import { RouterLink } from '@angular/router';
 export class PopularTagsComponent implements OnInit {
   private readonly store = inject(Store);
 
-  public tags$!: Observable<PopularTag[]>;
-  public isLoading$!: Observable<boolean>;
-  public errors$!: Observable<string | null>;
+  public readonly tags$: Observable<string[]> = this.store.pipe(
+    select(tagsFeature.selectData),
+  );
+  public readonly errors$: Observable<string | null> = this.store.pipe(
+    select(tagsFeature.selectErrors),
+  );
+  public readonly isLoading$: Observable<boolean> = this.store.pipe(
+    select(tagsFeature.selectIsLoading),
+  );
 
   ngOnInit(): void {
-    this.fetchData();
-    this.initializeData();
-  }
-
-  private fetchData(): void {
     this.store.dispatch(TagsActionsGroup.get());
-  }
-
-  private initializeData(): void {
-    this.tags$ = this.store.pipe(select(tagsDataSelector));
-    this.errors$ = this.store.pipe(select(tagsErrorsSelector));
-    this.isLoading$ = this.store.pipe(select(tagsLoadingSelector));
   }
 }
