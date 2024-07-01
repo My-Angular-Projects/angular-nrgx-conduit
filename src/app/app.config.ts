@@ -18,10 +18,7 @@ import * as feedEffects from './components/feeds/store/effects/feed.effect';
 import * as tagsEffects from './components/tags/store/tags.effect';
 import { CurrentUserAction } from './components/auth/store/actions';
 import { IGlobalState } from './interfaces';
-import {
-  feedsFeatureKey,
-  feedsReducer,
-} from './components/feeds/store/reducers';
+import { feedsFeature } from './components/feeds/store/reducers';
 import { tagsFeature } from './components/tags/store/tags.reducer';
 
 function initializeApplication(store: Store<IGlobalState>): () => void {
@@ -33,7 +30,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideStore(),
     provideState({ name: authFeatureKey, reducer: authReducer }),
-    provideState({ name: feedsFeatureKey, reducer: feedsReducer }),
+    provideState(feedsFeature),
     provideState(tagsFeature),
     provideEffects(authEffects, currentUserEffects, feedEffects, tagsEffects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),

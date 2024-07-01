@@ -7,17 +7,15 @@ import {
 } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { FeedActionGroup } from '../store/actions';
-import {
-  feedDataSelector,
-  feedErrorsSelector,
-  feedLoadingSelector,
-} from '../store/selectors';
 import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { LoadingComponent } from '../../loading/loading.component';
 import { ErrorMessagesComponent } from '../../error-messages/error-messages.component';
 import { PaginationComponent } from '../../pagination/pagination.component';
 import { TagsListComponent } from '../../tags/tags-list/tags-list.component';
+import { feedsFeature } from '../store/reducers';
+import { Observable } from 'rxjs';
+import { IFeed } from '../../../interfaces';
 
 @Component({
   selector: 'rw-feed',
@@ -38,9 +36,15 @@ export class FeedComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
-  public readonly isLoading$ = this.store.pipe(select(feedLoadingSelector));
-  public readonly feeds$ = this.store.pipe(select(feedDataSelector));
-  public readonly errors$ = this.store.pipe(select(feedErrorsSelector));
+  public readonly isLoading$: Observable<boolean> = this.store.pipe(
+    select(feedsFeature.selectIsLoading),
+  );
+  public readonly feeds$: Observable<IFeed> = this.store.pipe(
+    select(feedsFeature.selectData),
+  );
+  public readonly errors$: Observable<string> = this.store.pipe(
+    select(feedsFeature.selectErrors),
+  );
 
   public articlesCurrentPage!: number;
   public baseUrl!: string;
@@ -49,18 +53,10 @@ export class FeedComponent implements OnInit {
     alias: 'apiUrl',
     required: true,
   })
-  public apiUrlProps: string = '';
+  public apiUrlProps = '';
 
   ngOnInit(): void {
-    this.initializeValues();
-    this.initializeListeners();
-  }
-
-  private initializeValues(): void {
     this.baseUrl = this.router.url.split('?')[0];
-  }
-
-  private initializeListeners(): void {
     this.route.queryParams.subscribe((params: Params) => {
       this.articlesCurrentPage = Number(params['page'] || '1');
       this.store.dispatch(FeedActionGroup.get({ request: this.apiUrlProps }));

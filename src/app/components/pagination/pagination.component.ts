@@ -5,14 +5,14 @@ import {
   Input,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { select, Store } from '@ngrx/store';
-import { feedPagesCountSelector } from '../feeds/store/selectors';
+import { feedsFeature } from '../feeds/store/reducers';
 
 @Component({
   selector: 'rw-pagination',
   standalone: true,
-  imports: [RouterLink, AsyncPipe],
+  imports: [RouterLink, AsyncPipe, NgClass],
   templateUrl: './pagination.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -30,6 +30,6 @@ export class PaginationComponent {
   public baseUrl = '';
 
   public readonly pagesCount$ = inject(Store).pipe(
-    select(feedPagesCountSelector),
+    select(feedsFeature.selectPagesCount),
   );
 }

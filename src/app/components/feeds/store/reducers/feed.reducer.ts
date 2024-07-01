@@ -1,8 +1,7 @@
-import { createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import { FeedActionGroup } from '../actions';
 import { IFeed, IFeedState } from '../../../../interfaces';
-
-export const feedsFeatureKey = 'feeds';
+import { generateRange } from '../../../helpers';
 
 export const initialState: IFeedState = {
   isLoading: false,
@@ -27,3 +26,28 @@ export const feedsReducer = createReducer(
     isLoading: false,
   })),
 );
+
+export const feedsFeature = createFeature({
+  name: 'feeds',
+  reducer: feedsReducer,
+  extraSelectors: ({ selectData, selectArticlesLimit }) => {
+    const selectArticlesCount = createSelector(
+      selectData,
+      (data: IFeed): number => data.articlesCount,
+    );
+
+    const selectPagesCount = createSelector(
+      selectArticlesCount,
+      selectArticlesLimit,
+      (articlesCount: number, articlesLimit: number): number[] => {
+        if (articlesCount && articlesLimit) {
+          return generateRange(1, Math.ceil(articlesCount / articlesLimit));
+        } else {
+          return [];
+        }
+      },
+    );
+
+    return { selectPagesCount };
+  },
+});
